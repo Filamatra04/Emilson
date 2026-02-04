@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>CV - Filamatra Emilson</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      color: #333;
+    }
+
+    .cv-container {
+      display: flex;
+      max-width: 1000px;
+      margin: 40px auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    /* COLONNE GAUCHE (bleue) */
+    .left-column {
+      background-color: #0a2c47;
+      color: white;
+      width: 300px;
+      padding: 30px 20px;
+    }
+
+    .photo-profil {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 30px auto;
+      border: 5px solid white;
+    }
+
+    .photo-profil img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .left-column h3 {
+      text-transform: uppercase;
+      font-size: 16px;
+      margin-top: 30px;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      padding-bottom: 5px;
+    }
+
+    .left-column p, .left-column li {
+      font-size: 14px;
+      margin: 10px 0;
+    }
+
+    .left-column ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    /* COLONNE DROITE */
+    .right-column {
+      padding: 30px;
+      flex-grow: 1;
+    }
+
+    .right-column h1 {
+      font-size: 28px;
+      color: #0a2c47;
+      margin-bottom: 5px;
+    }
+
+    .right-column h2 {
+      margin-top: 30px;
+      font-size: 20px;
+      border-bottom: 2px solid #0a2c47;
+      padding-bottom: 5px;
+      color: #0a2c47;
+    }
+
+    .job, .education {
+      margin: 15px 0;
+    }
+
+    .job h3, .education h3 {
+      font-size: 16px;
+      margin: 5px 0;
+      color: #0a2c47;
+    }
+
+    .job span, .education span {
+      font-size: 13px;
+      color: #555;
+      font-style: italic;
+    }
+
+    .job ul {
+      margin: 5px 0 15px 20px;
+    }
+
+    .skills-bar {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      height: 10px;
+      margin-top: 5px;
+      width: 100%;
+    }
+
+    .skills-bar-fill {
+      height: 100%;
+      border-radius: 20px;
+      background: #0a2c47;
+    }
+  </style>
+</head>
+<body>
+  <div class="cv-container">
+    <div class="left-column">
+      <div class="photo-profil">
+        <img src="Image_2025_04_01_18_05_10.jpg" alt="filamatra">
+      </div>
+      <h3>Coordonnées</h3>
+      <p>📞 123-456-7890</p>
+      <p>📧 hello@reallygreatsite.com</p>
+      <p>📍 123 Anywhere St, Any City</p>
+
+      <h3>Langues</h3>
+      <p>Anglais</p>
+      <div class="skills-bar"><div class="skills-bar-fill" style="width: 90%;"></div></div>
+      <p>Allemand</p>
+      <div class="skills-bar"><div class="skills-bar-fill" style="width: 70%;"></div></div>
+
+      <h3>Compétences</h3>
+      <ul>
+        <li>Gestion du temps</li>
+        <li>Organisation</li>
+        <li>Communication</li>
+        <li>Leadership</li>
+        <li>Logiciels de gestion de projet</li>
+        <li>Gestion de budget</li>
+      </ul>
+
+      <h3>Centres d'intérêt</h3>
+      <ul>
+        <li>Lecture</li>
+        <li>Randonnée</li>
+        <li>Gymnastique</li>
+      </ul>
+    </div>
+
+    <div class="right-column">
+      <h1> Filamatra Emilson</h1>
+      <p><strong>Chargée de projet</strong></p>
+
+      <h2>Formation</h2>
+      <div class="education">
+        <h3>Master en Management</h3>
+        <span>2016 – 2018 | Really Great School – Any City</span>
+      </div>
+      <div class="education">
+        <h3>Licence en Gestion Administrative</h3>
+        <span>2013 – 2016 | Really Great School – Any City</span>
+      </div>
+
+      <h2>Expérience professionnelle</h2>
+      <div class="job">
+        <h3>Chargée de Projet</h3>
+        <span>Depuis janvier 2020 | Really Great Company – Any City</span>
+        <ul>
+          <li>Élaboration du plan de projet et gestion des calendriers</li>
+          <li>Gestion des ressources et du budget</li>
+          <li>Gestion des risques (imprévus, identification)</li>
+        </ul>
+      </div>
+      <div class="job">
+        <h3>Assistante Chargée de Projet</h3>
+        <span>Septembre 2018 – Janvier 2020 | Really Great Company</span>
+        <ul>
+          <li>Rédaction des rapports</li>
+          <li>Participation aux réunions de suivi</li>
+          <li>Suivi de l'avancement avec les équipes</li>
+        </ul>
+      </div>
+      <div class="job">
+        <h3>Stagiaire Chargée de Projet</h3>
+        <span>Février 2018 – Juin 2018 | Really Great Company</span>
+        <ul>
+          <li>Aide à définir les objectifs</li>
+          <li>Participation aux plans de projet</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

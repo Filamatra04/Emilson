@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathématiques - Solveur d'Équations</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3f7;
+            --dark-color: #2d3142;
+            --light-color: #f8f9fa;
+            --error-color: #e63946;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        /* Header et Navigation */
+        header {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+            position: relative;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--accent-color);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Contenu principal */
+        main {
+            padding: 100px 5% 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: calc(100vh - 150px);
+        }
+
+        .calculator {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.5s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .inputs {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        input {
+            width: 70px;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2);
+        }
+
+        button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .result {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border: 1px solid #eee;
+            text-align: left;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .error {
+            color: var(--error-color);
+            font-weight: 500;
+        }
+
+        .solution {
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Sections cachées */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 70px;
+                width: 50%;
+                height: calc(100vh - 70px);
+                background-color: var(--primary-color);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 2rem;
+                transition: right 0.5s ease;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger.active div:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .hamburger.active div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active div:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+            main {
+                padding-top: 80px;
+            }
+
+            .calculator {
+                padding: 1.5rem;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">MathSolver</a>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" data-section="home">Accueil</a></li>
+                <li><a href="#" class="nav-link" data-section="ads">Panneau publicitaire</a></li>
+                <li><a href="#" class="nav-link" data-section="about">À propos</a></li>
+                <li><a href="#" class="nav-link" data-section="contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Section Accueil -->
+        <section id="home" class="section active">
+            <div class="calculator">
+                <h1>Solveur d'Équation du Second Degré</h1>
+                <p class="description">Entrez les coefficients de l'équation ax² + bx + c = 0</p>
+                
+                <div class="inputs">
+                    <input type="number" id="a" placeholder="a">
+                    <span>x² + </span>
+                    <input type="number" id="b" placeholder="b">
+                    <span>x + </span>
+                    <input type="number" id="c" placeholder="c">
+                    <span>= 0</span>
+                </div>
+                
+                <button id="solve-btn">Résoudre</button>
+                
+                <div id="result" class="result">
+                    <!-- Les résultats apparaîtront ici -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Panneau publicitaire -->
+        <section id="ads" class="section">
+            <div class="calculator">
+                <h1>Panneau Publicitaire</h1>
+                <p>Espace réservé aux annonces publicitaires</p>
+                <div class="ad-container" style="margin-top: 2rem; padding: 1rem; background: #f0f0f0; border-radius: 8px;">
+                    <p>Publicité à venir...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section À propos -->
+        <section id="about" class="section">
+            <div class="calculator">
+                <h1>À Propos</h1>
+                <div style="text-align: left; margin-top: 1.5rem;">
+                    <p>Ce solveur d'équations a été développé pour aider les étudiants et les passionnés de mathématiques à résoudre rapidement les équations du second degré.</p>
+                    <p style="margin-top: 1rem;">Fonctionnalités :</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>Résolution d'équations quadratiques</li>
+                        <li>Affichage des solutions réelles et complexes</li>
+                        <li>Interface conviviale et intuitive</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Contact -->
+        <section id="contact" class="section">
+            <div class="calculator">
+                <h1>Contactez-nous</h1>
+                <form id="contact-form" style="margin-top: 1.5rem; text-align: left;">
+                    <div style="margin-bottom: 1rem;">
+                        <label for="name" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Nom</label>
+                        <input type="text" id="name" name="name" required style="width: 100%; padding: 0.8rem; border: 1px solid #dddddd; border-radius: 5px;">
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label for="email" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Email</label>
+                        <input type="email" id="email" name="email" required style="width: 100%; padding: 0.8rem; border: 1px solid #dddddd; border-radius: 5px;">
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label for="message" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Message</label>
+                        <textarea id="message" name="message" rows="4" required style="width: 100%; padding: 0.8rem; border: 1px solid #dddddd; border-radius: 5px;"></textarea>
+                    </div>
+                    <button type="submit" style="width: 100%;">Envoyer</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 MathSolver. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Initialisation d'EmailJS
+        emailjs.init('template_m26boer'); // Remplacez par votre User ID EmailJS
+
+        // Navigation
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navLinkItems = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.section');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Retirer la classe active de tous les liens et sections
+                navLinkItems.forEach(item => item.classList.remove('active'));
+                sections.forEach(section => section.classList.remove('active'));
+                
+                // Ajouter la classe active au lien cliqué
+                link.classList.add('active');
+                
+                // Afficher la section correspondante
+                const sectionId = link.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+                
+                // Fermer le menu mobile si ouvert
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('active');
+                }
+            });
+        });
+
+        // Solveur d'équations
+        const solveBtn = document.getElementById('solve-btn');
+        const resultDiv = document.getElementById('result');
+
+        solveBtn.addEventListener('click', () => {
+            // Récupérer les valeurs des inputs
+            const a = parseFloat(document.getElementById("a").value);
+            const b = parseFloat(document.getElementById("b").value);
+            const c = parseFloat(document.getElementById("c").value);
+
+            // Vérifier que les champs sont remplis
+            if (isNaN(a) || isNaN(b) || isNaN(c)) {
+                resultDiv.innerHTML = "<p class='error'>Veuillez entrer des nombres valides pour tous les coefficients.</p>";
+                resultDiv.style.display = 'block';
+                return;
+            }
+
+            // Vérifier que 'a' n'est pas nul
+            if (a === 0) {
+                resultDiv.innerHTML = "<p class='error'>Erreur : Le coefficient 'a' ne peut pas être nul !</p>";
+                resultDiv.style.display = 'block';
+                return;
+            }
+
+            // Calculer le discriminant
+            const discriminant = b * b - 4 * a * c;
+            let solutionsHTML = '';
+
+            // Calculer les solutions en fonction du discriminant
+            if (discriminant > 0) {
+                const x1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+                const x2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+                solutionsHTML = `
+                    <p>Deux solutions réelles distinctes :</p>
+                    <p class="solution">x₁ = ${x1.toFixed(2)}</p>
+                    <p class="solution">x₂ = ${x2.toFixed(2)}</p>
+                `;
+            } else if (discriminant === 0) {
+                const x = -b / (2 * a);
+                solutionsHTML = `
+                    <p>Une solution réelle double :</p>
+                    <p class="solution">x = ${x.toFixed(2)}</p>
+                `;
+            } else { 
+                const realPart = (-b / (2 * a)).toFixed(2);
+                const imaginaryPart = (Math.sqrt(-discriminant) / (2 * a)).toFixed(2);
+                solutionsHTML = `
+                    <p>Pas de solution réelle (discriminant négatif) :</p>
+                    <p class="solution">x₁ = ${realPart} + ${imaginaryPart}i</p>
+                    <p class="solution">x₂ = ${realPart} - ${imaginaryPart}i</p>
+                `;
+            }
+
+            resultDiv.innerHTML = solutionsHTML;
+            resultDiv.style.display = 'block';
+        });
+
+        // Formulaire de contact avec EmailJS
+        const contactForm = document.getElementById('contact-form');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Envoi avec EmailJS
+            emailjs.sendForm('service_zggu5yb', 'template_1ohtjkm', e.target)
+                .then(() => {
+                    alert('Message envoyé avec succès! Nous vous contacterons bientôt.');
+                    contactForm.reset();
+                }, (error) => {
+                    alert('Une erreur est survenue lors de l\'envoi du message. Veuillez réessayer plus tard.');
+                    console.error('Erreur EmailJS:', error);
+                });
+        });
+    </script>
+</body>
+</html>

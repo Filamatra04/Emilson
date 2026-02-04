@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Projet DHTML</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<style>
+    .couche {
+  display: none;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+</style>
+<body>
+  <header class="bg-primary text-white text-center p-2">Titre</header>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Menu</a>
+      <div class="navbar-nav">
+        <a class="nav-link" href="#" onclick="showPage('cramer')">Cramer</a>
+        <a class="nav-link" href="#" onclick="showPage('image')">Image</a>
+        <a class="nav-link" href="#" onclick="showPage('panneau')">Panneau</a>
+        <a class="nav-link" href="#" onclick="showPage('datatable')">Datatable</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mt-4" id="content">Bienvenue</main>
+
+  <footer class="bg-light text-center p-2 mt-4">Auteurs : Votre Nom</footer>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+    function showPage(page) {
+  if (page === 'cramer') {
+    $('#content').html(`
+      <h2>Résolution par la méthode de Cramer</h2>
+      <div>
+        <label>Entrez les coefficients A<sub>ij</sub> et B<sub>i</sub> :</label>
+        <table class="table table-bordered">
+          <tr>
+            <td><input id="a11" type="number"></td>
+            <td><input id="a12" type="number"></td>
+            <td><input id="a13" type="number"></td>
+            <td>= <input id="b1" type="number"></td>
+          </tr>
+          <tr>
+            <td><input id="a21" type="number"></td>
+            <td><input id="a22" type="number"></td>
+            <td><input id="a23" type="number"></td>
+            <td>= <input id="b2" type="number"></td>
+          </tr>
+          <tr>
+            <td><input id="a31" type="number"></td>
+            <td><input id="a32" type="number"></td>
+            <td><input id="a33" type="number"></td>
+            <td>= <input id="b3" type="number"></td>
+          </tr>
+        </table>
+        <button onclick="resoudreCramer()" class="btn btn-primary">Résoudre</button>
+        <div id="resultats" class="mt-3"></div>
+      </div>
+    `);
+  }
+
+  // Ajoute les autres fonctions showPage('image'), etc. plus tard
+}
+
+function det3(a,b,c,d,e,f,g,h,i) {
+  return a*(e*i - f*h) - b*(d*i - f*g) + c*(d*h - e*g);
+}
+
+function resoudreCramer() {
+  const a11 = +$('#a11').val(), a12 = +$('#a12').val(), a13 = +$('#a13').val();
+  const a21 = +$('#a21').val(), a22 = +$('#a22').val(), a23 = +$('#a23').val();
+  const a31 = +$('#a31').val(), a32 = +$('#a32').val(), a33 = +$('#a33').val();
+  const b1 = +$('#b1').val(), b2 = +$('#b2').val(), b3 = +$('#b3').val();
+
+  const D = det3(a11,a12,a13, a21,a22,a23, a31,a32,a33);
+  const Dx = det3(b1,a12,a13, b2,a22,a23, b3,a32,a33);
+  const Dy = det3(a11,b1,a13, a21,b2,a23, a31,b3,a33);
+  const Dz = det3(a11,a12,b1, a21,a22,b2, a31,a32,b3);
+
+  $('#resultats').html(`
+    <p>Δ = ${D}</p>
+    <p>X = ${Dx}/${D} = ${Dx/D}</p>
+    <p>Y = ${Dy}/${D} = ${Dy/D}</p>
+    <p>Z = ${Dz}/${D} = ${Dz/D}</p>
+  `);
+}
+if (page === 'image') {
+  $('#content').html(`
+    <h2>Redimensionner une image</h2>
+    <div>
+      <label>Largeur: <input id="largeur" type="range" min="100" max="500" value="300"></label><br>
+      <label>Hauteur: <input id="hauteur" type="range" min="100" max="500" value="300"></label><br>
+      <div id="couche" style="overflow:hidden; border:1px solid black; width:300px; height:300px;">
+        <img src="https://via.placeholder.com/300" id="img" style="width:100%; height:100%">
+      </div>
+    </div>
+  `);
+
+  $('#largeur, #hauteur').on('input', function() {
+    $('#couche').css({
+      width: $('#largeur').val() + 'px',
+      height: $('#hauteur').val() + 'px'
+    });
+  });
+}
+function showPage(page) {
+if (page === 'panneau') {
+  $('#content').html(`
+    <h2>Panneau publicitaire rotatif</h2>
+    <div id="panneau">
+      <div class="couche">Coca-Cola</div>
+      <div class="couche">Fanta</div>
+      <div class="couche">Sprite</div>
+    </div>
+  `);
+
+  let index = 0;
+  const couches = $('#panneau .couche');
+  function rotation() {
+    couches.hide();
+    $(couches[index]).fadeIn();
+    index = (index + 1) % couches.length;
+  }
+  setInterval(rotation, 2000);
+  rotation();
+}if (page === 'datatable') {
+  $('#content').html(`
+    <h2>Produits</h2>
+    <table id="tableau" class="display">
+      <thead><tr><th>Designation</th><th>Quantité</th><th>Prix</th><th>Montant</th></tr></thead>
+      <tbody>
+        <tr><td>Riz</td><td>10</td><td>4000</td><td>40000</td></tr>
+        <tr><td>Manioc</td><td>20</td><td>3000</td><td>60000</td></tr>
+        <tr><td>Sucre</td><td>50</td><td>1000</td><td>50000</td></tr>
+        <tr><td>Patate</td><td>40</td><td>500</td><td>20000</td></tr>
+      </tbody>
+    </table>
+    <canvas id="graphe" width="400" height="200"></canvas>
+  `);
+}
+
+  $('#tableau').DataTable({
+    language: {
+      url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/fr-FR.json'
+    }
+  });
+
+  // Graphique avec ChartJS
+  const ctx = document.getElementById('graphe');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Riz', 'Manioc', 'Sucre', 'Patate'],
+      datasets: [{
+        label: 'Montant (Ar)',
+        data: [40000, 60000, 50000, 20000],
+        backgroundColor: ['#f00', '#0f0', '#00f', '#ff0']
+      }]
+    }
+  });
+}
+
+
+  </script>
+</body>
+</html>

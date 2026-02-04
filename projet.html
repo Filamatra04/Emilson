@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Méthode de Cramer</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <h1>Cramer</h1>
+      <p>Résolution de systèmes à 3 inconnues</p>
+    </div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Gabriel_Cramer.jpeg/220px-Gabriel_Cramer.jpeg" alt="Gabriel Cramer">
+    <div class="panneau">📣 Panneau Pub : Apprenez les mathématiques visuellement !</div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Entrée des coefficients</h2>
+      <form id="cramer-form">
+        <div class="equation">
+          <input type="number" placeholder="a1" required />
+          <input type="number" placeholder="b1" required />
+          <input type="number" placeholder="c1" required />
+          <input type="number" placeholder="d1" required />
+        </div>
+        <div class="equation">
+          <input type="number" placeholder="a2" required />
+          <input type="number" placeholder="b2" required />
+          <input type="number" placeholder="c2" required />
+          <input type="number" placeholder="d2" required />
+        </div>
+        <div class="equation">
+          <input type="number" placeholder="a3" required />
+          <input type="number" placeholder="b3" required />
+          <input type="number" placeholder="c3" required />
+          <input type="number" placeholder="d3" required />
+        </div>
+        <button type="submit">Calculer</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Résultat</h2>
+      <table id="datatable">
+        <thead>
+          <tr>
+            <th>X</th>
+            <th>Y</th>
+            <th>Z</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

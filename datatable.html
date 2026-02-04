@@ -1,0 +1,430 @@
+!
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./chart.umd.min.js.js">
+    </script>
+    <style>
+        :root {
+            --bg-color: #f10f0f;
+            --text-color: black;
+            --link-bg: #007bff;
+            --link-hover: #0056b3;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --footer-bg: #f0f0f0;
+
+            --dark-bg: #121212;
+            --dark-text: #f1f1f1;
+            --dark-link-bg: #3399ff;
+            --dark-link-hover: #1a73e8;
+            --dark-footer-bg: #1e1e1e;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            background-image: url(./pexels-jplenio-2080960.jpg);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 100px;
+        }
+
+        body.dark {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--header-bg);
+            color: var(--text-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #ccc;
+            border-right: 20px;
+            color: rgb(0, 136, 255);
+
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            font-size: 13px;
+            text-decoration: none;
+            background-color: var(--link-bg);
+            color: white;
+            padding: 4px 13px;
+            border-radius: 20px;
+            transition: background-color 0.5s ease;
+        }
+
+        body.dark nav a {
+            background-color: var(--dark-link-bg);
+        }
+
+        nav a:hover {
+            background-color: var(--link-hover);
+        }
+
+        body.dark nav a:hover {
+            background-color: var(--dark-link-hover);
+        }
+
+        #theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: inherit;
+        }
+
+        main {
+            flex: 1;
+            padding-top: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            height: auto;
+            width: auto;
+        }
+
+        /* .main-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .main-content p {
+            font-size: 1.2rem;
+        } */
+
+        footer {
+            background-color: var(--footer-bg);
+            color: inherit;
+            text-align: center;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            border-top: 1px solid #ccc;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        body.dark footer {
+            background-color: var(--dark-footer-bg);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+
+        }
+
+        main {
+            text-align: center;
+            flex: 1 0 auto;
+        }
+
+        /* Tableau */
+        table {
+            height: 40%;
+            width: 90%;
+            border-collapse: separate;
+            border-spacing: 0;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+            border-radius: 16px;
+            overflow: hidden;
+            background: #a78282;
+        }
+
+        th,
+        td {
+            border: none;
+            padding: 16px 12px;
+            text-align: center;
+        }
+
+        th {
+            background: linear-gradient(90deg, #00b4d8, #48cae4);
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.08em;
+            letter-spacing: 0.5px;
+        }
+
+        tr {
+            background-color: #f1f9fb;
+            transition: 1s;
+        }
+
+        tr:hover {
+            background-color: #02f82b;
+            transition: 1s;
+        }
+
+        tfoot th,
+        tfoot td {
+            background: #f9d342;
+            color: #2d3e50;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        #en-bas {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 40px;
+            gap: 2em;
+            flex-wrap: wrap;
+        }
+
+        #en-bas>div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            padding: 1.2em 2em;
+            width: 400px;
+            min-width: 320px;
+            height: 157px;
+        }
+
+        #en-bas p {
+            height: 20px;
+            padding: 5px 10px;
+            margin: 0.5em 0;
+            font-size: 1.08em;
+            color: rgb(26, 24, 24);
+        }
+
+        #produits,
+        #en-bas {
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* .footer {
+            flex-shrink: 0;
+        } */
+
+        canvas {
+            transition: 2s;
+            background: #e0f7fa;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Responsive */
+        @media (max-width: 800px) {
+
+            .nav-container,
+            .footer-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1em;
+            }
+
+            #en-bas {
+                flex-direction: column;
+                gap: 1.5em;
+                width: 50px;
+                height: 25px;
+            }
+
+            canvas {
+                margin-left: 0;
+                width: 100% !important;
+                height: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>DHTML L1 Groupe 35</h1>
+        <nav>
+            <a href="DHTML.html">Accueil</a>
+            <a href="Cramer.html">Cramer</a>
+            <a href="Image.html">Image</a>
+            <a href="panneau.html">Panneau</a>
+            <a href="datatable.html">Datatable</a>
+            <button id="theme-toggle" title="Changer le thème">🌙</button>
+        </nav>
+    </header>
+    <main>
+        <h2>Tableau des Produits</h2>
+        <table id="produits">
+            <thead>
+                <tr>
+                    <th>Désignation</th>
+                    <th>Quantité</th>
+                    <th>Prix Unitaire</th>
+                    <th>Montant</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Riz</td>
+                    <td class="qte">10</td>
+                    <td>4000</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Manioc</td>
+                    <td class="qte">20</td>
+                    <td>3000</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Sucre</td>
+                    <td class="qte">50</td>
+                    <td>1000</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Patate</td>
+                    <td class="qte">40</td>
+                    <td>500</td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total</th>
+                    <th>120</th>
+                    <th id="totalUt"> </th>
+                    <td id="totalMontant"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <div id="en-bas">
+            <div>
+                <p>Prix Moyen:</p>
+                <p>Prix Minimal:</p>
+                <p>Prix Maximal:</p>
+            </div>
+            <canvas width="400" height="200" id="graphique"></canvas>
+        </div>
+    </main>
+    <footer>
+        &copy; 2025 IG L1 ENI
+    </footer>
+    <script>
+        window.onload = function () {
+            const table = document.getElementById('produits');
+            const rows = table.querySelectorAll('tbody tr');
+            let totalMontant = 0;
+            let totalPrixUnitaire = 0;
+            let prixUnitaires = [];
+            let quantites = [];
+            let labels = [];
+
+            rows.forEach(row => {
+                const qte = parseFloat(row.children[1].textContent);
+                const prix = parseFloat(row.children[2].textContent);
+                const montant = qte * prix;
+                row.children[3].textContent = montant;
+                totalMontant += montant;
+                totalPrixUnitaire += prix;
+                prixUnitaires.push(prix);
+                quantites.push(qte);
+                labels.push(row.children[0].textContent);
+            })
+
+            document.getElementById('totalMontant').textContent = totalMontant;
+
+            document.getElementById('totalUt').textContent = totalPrixUnitaire;
+
+            const stats = document.querySelectorAll('#en-bas p');
+            stats[0].textContent = "Prix Moyen:   " + (totalPrixUnitaire / prixUnitaires.length).toFixed(2);
+            stats[1].textContent = "Prix Minimal: " + Math.min(...prixUnitaires);
+            stats[2].textContent = "Prix Maximal: " + Math.max(...prixUnitaires);
+
+            const ctx = document.getElementById('graphique').getContext('2d');
+            let graphique = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Quantité',
+                        data: quantites,
+                        backgroundColor: [
+                            'rgba(255, 0, 242, 0.7)',
+                            'rgba(255, 0, 0, 0.7)',
+                            'rgba(22, 255, 1, 0.7)',
+                            'rgba(0, 4, 255, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 206, 86, 1)',
+                        ],
+                        borderWidth: 3,
+                        hoverBorderColor: 'white'
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Répartition des quantités par produit'
+                        }
+                    }
+                }
+            });
+        };
+    </script>
+    <script>
+        const toggle = document.getElementById("theme-toggle");
+        toggle.onclick = () => {
+            document.body.classList.toggle("dark");
+            toggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DHTML L1</title>
+  <style>
+    :root {
+      --bg-color: #f10f0f;
+      --text-color:black;
+      --link-bg: #007bff;
+      --link-hover: #0056b3;
+      --header-bg: rgba(255, 255, 255, 0.95);
+      --footer-bg: #f0f0f0;
+
+      --dark-bg: #121212;
+      --dark-text: #f1f1f1;
+      --dark-link-bg: #3399ff;
+      --dark-link-hover: #1a73e8;
+      --dark-footer-bg: #1e1e1e;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      /* background-color: darkslateblue; */
+      background-image: url(./pexels-jplenio-2080960.jpg);
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.dark {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: var(--header-bg);
+      color: var(--text-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #ccc;
+      border-right: 20px;
+      color: rgb(0, 136, 255);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      font-size: 13px;
+      text-decoration: none;
+      background-color: var(--link-bg);
+      color: white;
+      padding: 4px 13px;
+      border-radius: 20px;
+      transition: background-color 0.5s ease;
+    }
+
+    body.dark nav a {
+      background-color: var(--dark-link-bg);
+    }
+
+    nav a:hover {
+      background-color: var(--link-hover);
+    }
+
+    body.dark nav a:hover {
+      background-color: var(--dark-link-hover);
+    }
+
+    #theme-toggle {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: inherit;
+    }
+
+    main {
+      flex: 1;
+      padding-top: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .main-content h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .main-content p {
+      font-size: 1.2rem;
+    }
+
+    footer {
+      background-color: var(--footer-bg);
+      color: inherit;
+      text-align: center;
+      padding: 10px 15px;
+      font-size: 0.9rem;
+      border-top: 1px solid #ccc;
+    }
+
+    body.dark footer {
+      background-color: var(--dark-footer-bg);
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      .main-content h2 {
+        font-size: 1.8rem;
+      }
+
+      .main-content p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>DHTML L1 Groupe 35</h1>
+    <nav>
+      <a href="DHTML.html">Accueil</a>
+      <a href="Cramer.html">Cramer</a>
+      <a href="Image.html">Image</a>
+      <a href="panneau.html">Panneau</a>
+      <a href="datatable.html">Datatable</a>
+      <button id="theme-toggle" title="Changer le thème">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="main-content">
+      <h2>Bienvenue sur notre projet DHTML</h2>
+      <p>Choisissez une page dans la navigation ci-dessus.</p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 IG L1 ENI
+  </footer>
+
+  <script>
+    const toggle = document.getElementById("theme-toggle");
+    toggle.onclick = () => {
+      document.body.classList.toggle("dark");
+      toggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+    };
+  </script>
+</body>
+</html>

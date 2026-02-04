@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery-3.7.1.js"></script>
+    <style>
+        :root {
+            --bg-color: #f10f0f;
+            --text-color: black;
+            --link-bg: #007bff;
+            --link-hover: #0056b3;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --footer-bg: #f0f0f0;
+
+            --dark-bg: #121212;
+            --dark-text: #f1f1f1;
+            --dark-link-bg: #3399ff;
+            --dark-link-hover: #1a73e8;
+            --dark-footer-bg: #1e1e1e;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            background-image: url(./pexels-jplenio-2080960.jpg);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        body.dark {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--header-bg);
+            color: var(--text-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #ccc;
+            border-right: 20px;
+            color: rgb(0, 136, 255);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #007bff;
+        }
+
+        nav {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            font-size: 13px;
+            text-decoration: none;
+            background-color: var(--link-bg);
+            color: white;
+            padding: 4px 13px;
+            border-radius: 20px;
+            transition: background-color 0.5s ease;
+        }
+
+        body.dark nav a {
+            background-color: var(--dark-link-bg);
+        }
+
+        nav a:hover {
+            background-color: var(--link-hover);
+        }
+
+        body.dark nav a:hover {
+            background-color: var(--dark-link-hover);
+        }
+
+        #theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: inherit;
+        }
+
+        main {
+            flex: 1;
+            padding-top: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .main-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .main-content p {
+            font-size: 1.2rem;
+        }
+
+        main {
+            flex: 1;
+            padding: 100px 10px 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 100px;
+        }
+
+        .slider-col {
+            margin-bottom: 1px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 40px;
+        }
+
+        body.dark .slider-col {
+            background-color: rgba(30, 30, 30, 0.8);
+        }
+
+        .slider-col label {
+            display: block;
+            margin: 2px 2px;
+            font-weight: bold;
+            height: 5px;
+            /* margin-top: 1px; */
+        }
+
+        .photo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+        .photo img {
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            max-width: 100%;
+        }
+
+        .photo img:hover {
+            transform: scale(1.02);
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            color: inherit;
+            text-align: center;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            border-top: 1px solid #ccc;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        body.dark footer {
+            background-color: var(--dark-footer-bg);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>DHTML L1 Groupe 35</h1>
+        <nav>
+            <a href="DHTML.html">Accueil</a>
+            <a href="Cramer.html">Cramer</a>
+            <a href="Image.html">Image</a>
+            <a href="panneau.html">Panneau</a>
+            <a href="datatable.html">Datatable</a>
+            <button id="theme-toggle" title="Changer le thème">🌙</button>
+        </nav>
+    </header>
+    <main class="containeur">
+        <div class="slider-col">
+            <label>Largeur:
+                <input type="range" id="sliderLargeur" min="50" max="500" value="100">
+                <span id="valLargeur">100</span>px
+            </label>
+            <br>
+            <label>Hauteur:
+                <input type="range" id="sliderHauteur" min="50" max="300" value="80">
+                <span id="valHauteur">80</span>px
+            </label>
+        </div>
+        <div class="photo">
+            <img src="./image projet/1025-800x600.jpg" alt="sary" id="emi" style="max-width: 100%; height: auto; border-radius: 15px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);">
+        </div>
+    </main>
+    <footer>
+        &copy; 2025 IG L1 ENI
+    </footer>
+    <script>
+        $(function () {
+            $('#sliderLargeur').on('input', function () {
+                $('#emi').css('width', $(this).val() + 'px');
+                $('#valLargeur').text($(this).val());
+            });
+            $('#sliderHauteur').on('input', function () {
+                $('#emi').css('height', $(this).val() + 'px');
+                $('#valHauteur').text($(this).val());
+            });
+        })
+    </script>
+
+    <script>
+        const toggle = document.getElementById("theme-toggle");
+        toggle.onclick = () => {
+            document.body.classList.toggle("dark");
+            toggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+        };
+    </script>
+</body>
+
+</html>

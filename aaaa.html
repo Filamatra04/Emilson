@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DHTML L1</title>
+  <style>
+    :root {
+      --bg-color: #f4f4f4;
+      --text-color: #222;
+      --header-bg: #007bff;
+      --link-bg: #007bff;
+      --link-hover: #0056b3;
+      --dark-bg: #1a1a1a;
+      --dark-text: #eee;
+      --footer-bg: #f0f0f0;
+      --footer-dark-bg: #222;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-image: url(./istockphoto-953006834-1024x1024.jpg);
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      transition: all 0.3s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.dark {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    header {
+      background-color: var(--header-bg);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    nav {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      background-color: var(--link-bg);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: var(--link-hover);
+    }
+
+    #theme-toggle {
+      background: white;
+      border: none;
+      color: var(--link-bg);
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0.3rem 0.5rem;
+    }
+
+    main {
+      padding-top: 130px;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      background-color: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+    }
+    h2{
+        text-align: center;
+        color: #2563eb;
+    }
+    .equation {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+     .equation input {
+      width: 20%;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+     button {
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+     button:hover {
+      background-color: #2563eb;
+    }
+
+    #resultats {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+      color: #0f172a;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+
+    .main-content h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .main-content p {
+      font-size: 1.2rem;
+    }
+
+    footer {
+      background-color: var(--footer-bg);
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    body.dark footer {
+      background-color: var(--footer-dark-bg);
+      color: var(--dark-text);
+    }
+    
+    @media (max-width: 600px) {
+      .equation input {
+        width: 22%;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .main-content h2 {
+        font-size: 1.8rem;
+      }
+
+      .main-content p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>DHTML L1 Groupe 35</h1>
+    <nav>
+      <a href="DHTML.html">Accueil</a>
+      <a href="Cramer.html">Cramer</a>
+      <a href="Image.html">Image</a>
+      <a href="panneau.html">Panneau</a>
+      <a href="datatable.html">Datatable</a>
+      <button id="theme-toggle" title="Changer le thème">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <main>
+  <h2>Résolution par la méthode de Cramer</h2>
+
+  <form id="cramerForm">
+    <div class="equation">
+      <input type="number" id="a11" placeholder="A11">
+      <input type="number" id="a12" placeholder="A12">
+      <input type="number" id="a13" placeholder="A13">
+      <span>=</span>
+      <input type="number" id="b1" placeholder="B1">
+    </div>
+    <div class="equation">
+      <input type="number" id="a21" placeholder="A21">
+      <input type="number" id="a22" placeholder="A22">
+      <input type="number" id="a23" placeholder="A23">
+      <span>=</span>
+      <input type="number" id="b2" placeholder="B2">
+    </div>
+    <div class="equation">
+      <input type="number" id="a31" placeholder="A31">
+      <input type="number" id="a32" placeholder="A32">
+      <input type="number" id="a33" placeholder="A33">
+      <span>=</span>
+      <input type="number" id="b3" placeholder="B3">
+    </div>
+
+    <div class="buttons">
+      <button type="button" onclick="resoudreCramer()">Résoudre</button>
+      <button type="button" onclick="reinitialiser()">Quitter</button>
+    </div>
+
+    <div id="error" class="error"></div>
+    <div id="resultats"></div>
+  </form>
+</main>
+
+<script>
+  function getValue(id) {
+    const value = document.getElementById(id).value;
+    return value === '' ? null : parseFloat(value);
+  }
+
+  function resoudreCramer() {
+    const champs = ['a11','a12','a13','b1','a21','a22','a23','b2','a31','a32','a33','b3'];
+    const valeurs = {};
+    let erreur = false;
+
+    champs.forEach(id => {
+      valeurs[id] = getValue(id);
+      if (valeurs[id] === null) erreur = true;
+    });
+
+    const errBox = document.getElementById("error");
+    const resBox = document.getElementById("resultats");
+    errBox.innerText = '';
+    resBox.innerText = '';
+
+    if (erreur) {
+      errBox.innerText = "Veuillez remplir tous les champs.";
+      return;
+    }
+
+    const {
+      a11, a12, a13, b1,
+      a21, a22, a23, b2,
+      a31, a32, a33, b3
+    } = valeurs;
+
+    const det = a11 * (a22 * a33 - a23 * a32)
+              - a12 * (a21 * a33 - a23 * a31)
+              + a13 * (a21 * a32 - a22 * a31);
+
+    if (det === 0) {
+      errBox.innerText = "Le système n'a pas de solution unique (déterminant nul).";
+      return;
+    }
+
+    const detX = b1 * (a22 * a33 - a23 * a32)
+               - a12 * (b2 * a33 - a23 * b3)
+               + a13 * (b2 * a32 - a22 * b3);
+
+    const detY = a11 * (b2 * a33 - a23 * b3)
+               - b1 * (a21 * a33 - a23 * a31)
+               + a13 * (a21 * b3 - b2 * a31);
+
+    const detZ = a11 * (a22 * b3 - b2 * a32)
+               - a12 * (a21 * b3 - b2 * a31)
+               + b1 * (a21 * a32 - a22 * a31);
+
+    const x = detX / det;
+    const y = detY / det;
+    const z = detZ / det;
+
+    resBox.innerHTML = `
+      <p>X = ${x.toFixed(2)}</p>
+      <p>Y = ${y.toFixed(2)}</p>
+      <p>Z = ${z.toFixed(2)}</p>
+    `;
+  }
+
+  function reinitialiser() {
+    document.getElementById("cramerForm").reset();
+    document.getElementById("resultats").innerText = '';
+    document.getElementById("error").innerText = '';
+  }
+</script>
+
+    <!-- <section class="main-content">
+      <h2>Bienvenue sur notre projet DHTML</h2>
+      <p>Choisissez une page dans la navigation ci-dessus.</p>
+    </section> -->
+  </main>
+
+  <footer>
+    &copy; 2025 IG L1 ENI
+  </footer>
+
+  <script>
+    const toggle = document.getElementById("theme-toggle");
+    toggle.onclick = () => {
+      document.body.classList.toggle("dark");
+      toggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+    };
+  </script>
+</body>
+</html>
